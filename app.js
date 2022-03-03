@@ -9,12 +9,7 @@ usuarioControl.conexionBD();
 
 menuCredenciales();
 
-//en construcción
 
-
-
-/*
-*/
 
 
 async function menuCredenciales() {
