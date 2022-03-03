@@ -14,7 +14,7 @@ menuCredenciales();
 
 async function menuCredenciales() {
     do {
-        var opcion = readline.questionInt('Qué desea hacer?\n1: iniciar sesion\n2: crear cuenta\n3: cerrar aplicacion \n');
+        var opcion = readline.questionInt('Que desea hacer?\n1: iniciar sesion\n2: crear cuenta\n3: cerrar aplicacion \n');
         if (opcion == 1) {
             await iniciarSesion();
         } else if (opcion == 2) {
@@ -27,8 +27,8 @@ async function crearCuenta(){
     let correo = readline.question('ingrese su correo: ');
     let nombre = readline.question('ingrese su nombre: ');
     do {
-        var contra = readline.question('ingrese su contrasena: ');
-        var contra2 = readline.question('ingrese su contraseña de nuevo: ');
+        var contra = readline.question('ingrese su contrasenia: ');
+        var contra2 = readline.question('ingrese su contrasenia de nuevo: ');
     } while (contra != contra2);
 
     do {
@@ -61,6 +61,15 @@ async function iniciarSesion() {
 
 async function menuPrincipal() {
     console.log('menu normal');
+    do {
+        var opcion = readline.questionInt('Que desea hacer?\n1: consultar un libro \n2: consultar todos los libros \n3: salir \nElegir opcion: ');
+        if (opcion == 1) {
+            let libroConsultar = readline.question('ingrese el libro que se desea consultar: ');
+            await noSql.consultarUnLibro(libroConsultar);
+        } else if (opcion == 2) {
+            await noSql.mostrarTodos();
+        }
+    } while (opcion != 3);
 }
 
 async function menuAdmin() {
