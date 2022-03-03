@@ -7,7 +7,7 @@ const esquemaUsuarios = new mongoose.Schema({
     contra : String,
     esAdmin : Boolean
 })
+const usuario = new mongoose.model('usuarios',esquemaUsuarios);
 
-exports.usuario = new mongoose.model('usuarios',esquemaUsuarios);
-
+module.exports = usuario;
 //module.exports.usuario = usuario;
