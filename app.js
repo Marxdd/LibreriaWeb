@@ -16,7 +16,7 @@ do {
         let usuario = usuarioControl.getUsuarioByCorreoyContra(correo,contra);
         console.log(usuario.nombre);
         do {
-            var opcion = readline.questionInt('Que desea hacer?\n1: agregar libro \n2: eliminar libro \n3: actualizar libro \n4: consultar todos los libros \n5: salir \n Elegir opcion: ');
+            var opcion = readline.questionInt('Que desea hacer?\n1: agregar libro \n2: eliminar libro \n3: actualizar libro \n4: consultar un libro \n5: consultar todos los libros \n6: salir \n Elegir opcion: ');
             if (opcion == 1) {
                 let autor = readline.question('ingrese un autor del libro: ');
                 let titulo = readline.question('ingrese el titulo del libro: ');
