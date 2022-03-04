@@ -33,7 +33,8 @@ class LibrosController {
     async eliminarLibro(titulo) {
         try {
             await this.conexionBD();
-            const libro = await libroModel.deleteOne({ titulo: titulo });
+            const libro = await libroModel.findOne({titulo: titulo});
+            await libroModel.deleteOne({ titulo: titulo });
             console.log('Se elimino correctamente el libro con titulo : ' + libro.titulo);
         } catch (error) {
             console.log(error);
