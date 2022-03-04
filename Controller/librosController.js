@@ -34,8 +34,12 @@ class LibrosController {
         try {
             await this.conexionBD();
             const libro = await libroModel.findOne({titulo: titulo});
-            await libroModel.deleteOne({ titulo: titulo });
-            console.log('Se elimino correctamente el libro con titulo : ' + libro.titulo);
+            if (libro != null) {
+              await libroModel.deleteOne({ titulo: titulo });
+              console.log('Se elimino correctamente el libro con titulo : ' + libro.titulo);
+            } else {
+              console.log("El libro que desea eliminar no existe");
+            }
         } catch (error) {
             console.log(error);
         }
@@ -50,7 +54,11 @@ class LibrosController {
     async consultarUnLibro(libroBuscar) {
         await this.conexionBD();
         const libroB = await libroModel.findOne({ titulo: libroBuscar });
+        if(libroB!=null){
         console.log(libroB);
+        }else{
+            console.log("No se encontro coincidencias");
+        }
         mongoose.disconnect();
     }
     async mostrarTodos() {
