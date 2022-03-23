@@ -15,7 +15,7 @@ exports.conexionBD = async () => {
 exports.cerrar = async () => {
     try {
         await mongoose.disconnect();
-        console.log('desconectado');
+        console.log('desconectad6o');
     } catch (error) {
         console.log(error);
     }

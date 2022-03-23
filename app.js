@@ -1,107 +1,36 @@
-const usuarioControl = require('./Controller/usuariosController');
-const readline = require('readline-sync');
-require('mongoose');
+const express = require('express');
+const morgan = require("morgan");
+const cors = require("cors");
+const usuarioRoutes = require('./routes/UsuarioRoutes');
+const libroRouters = require('./routes/LibroRouters');
 
-let LibrosController = require('./Controller/librosController');
-let noSql = new LibrosController()
+const corsOptions = {
+    origin:"*",
+    Credential:true,
+    optionSuccessStatus:200,
+  } 
 
-usuarioControl.conexionBD();
+const globalErrorHandler = require('./utils/appError');
+const app = express();
 
-menuCredenciales();
+// Middleware
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(cors(corsOptions));
+
+//Routers
+app.use('/api/v1/usuarios', usuarioRoutes);
+app.use('/api/v1/libros', libroRouters);
+
+app.all('*', (req, resp, next) =>{
+    next(new globalErrorHandler(`No se pudo acceder a ${req.originalUrl} en el servidor`, 404));
+});
+
+//Global error Handler 
+app.use(globalErrorHandler);
+
+
+module.exports = app;
 
 
 
-
-async function menuCredenciales() {
-    do {
-        var opcion = readline.questionInt('Que desea hacer?\n1: iniciar sesion\n2: crear cuenta\n3: cerrar aplicacion \n');
-        if (opcion == 1) {
-            await iniciarSesion();
-        } else if (opcion == 2) {
-           await crearCuenta();
-        }
-    } while (opcion != 3);
-}
-
-async function crearCuenta(){
-    let correo = readline.question('ingrese su correo: ');
-    let nombre = readline.question('ingrese su nombre: ');
-    do {
-        var contra = readline.question('ingrese su contrasenia: ');
-        var contra2 = readline.question('ingrese su contrasenia de nuevo: ');
-    } while (contra != contra2);
-
-    do {
-        var esAdmin = readline.questionInt('sera cuenta de administrador?\n1: Usuario normal\n2: Admin\n');
-        if (esAdmin == 1) {
-            await usuarioControl.addUsuario({ nombre: nombre, correo: correo, contra: contra, esAdmin: false });
-        } else if (esAdmin == 2) {
-            await usuarioControl.addUsuario({ nombre: nombre, correo: correo, contra: contra, esAdmin: true });
-        }
-
-    } while (esAdmin != 1 && esAdmin != 2);
-    usuarioControl.cerrar();
-}
-
-async function iniciarSesion() {
-    let correo = readline.question('ingrese su correo: ');
-    let contra = readline.question('ingrese su contrasenia: ');
-    let usuario = await usuarioControl.getUsuarioByCorreoyContra(correo, contra);
-    if (usuario == null) {
-        console.log('no existe');
-    } else {
-        if (usuario.esAdmin) {
-            await menuAdmin();
-        } else {
-            await menuPrincipal();
-        }
-    }
-    usuarioControl.cerrar();
-}
-
-async function menuPrincipal() {
-    console.log('menu normal');
-    do {
-        var opcion = readline.questionInt('Que desea hacer?\n1: consultar un libro \n2: consultar todos los libros \n3: salir \nElegir opcion: ');
-        if (opcion == 1) {
-            let libroConsultar = readline.question('ingrese el libro que se desea consultar: ');
-            await noSql.consultarUnLibro(libroConsultar);
-        } else if (opcion == 2) {
-            await noSql.mostrarTodos();
-        }
-    } while (opcion != 3);
-}
-
-async function menuAdmin() {
-    console.log('menu admin');
-    do {
-        var opcion = readline.questionInt('Que desea hacer?\n1: agregar libro \n2: eliminar libro \n3: actualizar libro \n4: consultar un libro\n5: consultar todos los libros \n6: salir \n Elegir opcion: ');
-        if (opcion == 1) {
-            let autor = readline.question('ingrese un autor del libro: ');
-            let titulo = readline.question('ingrese el titulo del libro: ');
-            let fechaPublicacion = readline.question('ingrese la fecha de publicacion: ');
-            let isbn = readline.question('ingrese el isbn del libro: ');
-            let editorial = readline.question('ingrese la editorial del libro: ');
-     
-            await noSql.agregarLibro({
-                autor: autor,
-                titulo: titulo,
-                fechaPublicacion: fechaPublicacion,
-                isbn: isbn,
-                editorial: editorial
-            });
-        } else if (opcion == 2) {
-            let tituloLibro = readline.question('ingrese el titulo del libro que desea eliminar: ');
-            await noSql.eliminarLibro(tituloLibro);
-        } else if (opcion == 3) {
-            let autor = readline.question('ingrese el autor del que se desea actualizar: ');
-            let tituloNuevo = readline.question('ingrese el nuevo titulo del libro que desea actualizar: ');
-            await noSql.actualizarLibro(autor,tituloNuevo);
-        } else if (opcion == 4){
-            let libroConsultar = readline.question('ingrese el libro que se desea consultar: ');
-            await noSql.consultarUnLibro(libroConsultar);
-        } else if (opcion == 5){
-            await noSql.mostrarTodos();
-        }
-    } while (opcion != 6);
-}
