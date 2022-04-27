@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const url = "mongodb://localhost:27017/dbbiblioteca";
 
 
-const libroModel = require('../Models/librosModel');
+const libroModel = require('../model/Libro');
 
 class LibrosController {
     async conexionBD() {

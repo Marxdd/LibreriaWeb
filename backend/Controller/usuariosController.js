@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const usuarioModel = require('../Models/usuariosModel');
+const usuarioModel = require('../model/Usuario');
 
 const uri = "mongodb://localhost:27017/dbbiblioteca";
 

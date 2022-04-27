@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
+    <title>Menú Principal</title>
+  </head>
+  <body>
+    <main>
+      <div id="app" class="contenedor">
+        <header>
+          <h1  id="bienvenida">Bienvenido {{Nombreusuario}} !</h1>
+        </header>
+        <hr />
+        <h2>Usuarios</h2>
+        <figure>
+          <img src="img/usuarios.jpg" width="100" alt="logo"/>
+        </figure>
+        <button v-on:click="cambiar('usuarios/consultarusuario.html')" id="btnConsultarUsuario">Consultar Usuarios</button>
+        <button v-on:click="cambiar('usuarios/agregarusuario.html')" id="btnAgregarUsuario">Agregar Usuario</button>
+        <button v-on:click="cambiar('usuarios/actualizarusuario.html')" id="btnActualizarUsuario">Actualizar Usuario</button>
+        <button v-on:click="cambiar('usuarios/eliminarusuario.html')" id="btnEliminarUsuario">Eliminar Usuario</button>
+
+        <h2>Libros</h2>
+        <figure>
+          <img src="img/libreria.png" width="100" alt="logo"/>
+        </figure>
+        <button v-on:click="cambiar('libros/consultarlibro.html')" id="btnConsultarLibros">Consultar Libros</button>
+        <button v-on:click="cambiar('libros/agregarlibro.html')" id="btnAgregarLibros">Agregar Libro</button>
+        <button v-on:click="cambiar('libros/actualizarlibro.html')" id="btnActualizarLibros">Actualizar Libro</button>
+        <button v-on:click="cambiar('libros/eliminarlibro.html')" id="btnEliminarLibros">Eliminar Libro</button>
+
+        
+      </div>
+    </main>
+
+  </body>
+</html>

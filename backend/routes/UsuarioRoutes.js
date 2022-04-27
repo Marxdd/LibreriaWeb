@@ -1,15 +1,15 @@
 const express = require('express');
-const controller = require("../controller/UsuariosControl");
+const usuarios = require("../Controller/usuariosController");
 const router = express.Router();
-const middleware = require("../middleware/usuariosMiddleware")
-const trabajador = new controller();
+const middleware = require("../middleware/usuariosMiddleware");
 
 
 router.route("/").get(async (req, res) => {
 
-    const data = await trabajador.consultarTodosDatos();
+    const data = await usuarios.getUsuarios();
 
     res.json(data);
+    console.log(data);
 });
 
 router.route("/").post(async (req, res) => {
@@ -21,7 +21,7 @@ router.route("/").post(async (req, res) => {
         telefono: req.body.telefono
     };
 
-    await trabajador.insertarDato(user);
+    await usu.insertarDato(user);
     delete user.contrasena
     res.status(201).json({
         status: 'Agregado!',

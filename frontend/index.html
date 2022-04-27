@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="index.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+    <title>Iniciar Sesión</title>
+  </head>
+  <body>
+    <main>
+      <div id="app" class="contenedor">
+        <header>
+          <h1>Libreria Web</h1>
+        </header>
+
+        <figure>
+          <img src="img/libreria.png" width="150"/>
+        </figure>
+
+        <section>
+          <hgroup>
+            <h4> Luis Audeves - 00000203675 </h4>
+            <h4> Mario lopez - 00000204829 </h4>
+            <h4> Abrahan Barrios - 00000203862 </h4>
+            <hr />
+          </hgroup>
+          
+          <div class="datosInicio">
+            <form action="menu.html" method="POST">
+              <label><b>Correo:</b></label>
+              <input v-model="correo"
+                class="cajaTexto"
+                type="text"
+                id="txtCorreo"
+                placeholder="Introduzca su correo"
+                required
+              />
+              <label><b>Contraseña:</b></label>
+              <input v-model="contra"
+                class="cajaTexto"
+                type="password"
+                id="txtPassword"
+                placeholder="Introduzca su contraseña"
+                required
+              />
+            </form>
+          </div>
+          <input id="btnIngresar" type="button" class="botonIngresar" value="Ingresar" />
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

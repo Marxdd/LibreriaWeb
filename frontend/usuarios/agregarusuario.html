@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/stylepag.css" />
+    <title>Agregar Usuario</title>
+  </head>
+  <body>
+    <main>
+
+      <header>
+        <h1>Agregar Usuario</h1>
+        <label class="mensaje1" id="mensaje1"
+          >Ingrese los datos solicitados para agregar un nuevo Usuario
+        </label>
+      </header>
+
+      <section>
+        <div id="contenedor">
+        <input type="text" placeholder="Nombre completo" required id="nombre">
+        <br>
+        <input type="text" placeholder="Dirección" required id="direccion">
+        <input type="text" placeholder="Teléfono" required id="telefono">
+        <br>
+        <input type="email" placeholder="Correo Electronico" required name="correo"
+        id="correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$">
+        <br>
+        <input type="pass" placeholder="Contraseña" name="contrasena" id="contrasena">
+        <br>    
+        <input type="submit" value="Registrarse" id="registrarse">
+        <br>
+        <input type="button" value="Cancelar" id="cancelar">
+        </div>
+        
+      </section>
+
+    </main>
+    <script src="agregarUsuario.js"></script>
+  </body>
+</html>
