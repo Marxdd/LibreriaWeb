@@ -1,50 +1,45 @@
-const URLTrabajador = "http://localhost:3312/api/v1/trabajador/";
-const sessionUser = new URLSearchParams(window.location.search);
-const _id = sessionUser.get("usuario");
-const configFetch = {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
+//Botones de usuarios
+const btnConsultarUsuario = document.getElementById("btnConsultarUsuario");
+const btnAgregarUsuario = document.getElementById("btnAgregarUsuario");
+const btnActualizarUsuario = document.getElementById("btnActualizarUsuario");
+const btnEliminarUsuario = document.getElementById("btnEliminarUsuario");
 
-const  app =  new Vue({
-    el: '#app',
-    data: {
-        NombreTrabajador:"",
-        imgTrabajador:'/frontend/img/usuario.png',
-        imgLibro:'/frontend/img/libro.png',
-        imgInventario:'/frontend/img/inventario.png'
-    },
-    methods: {
-        foo: function () {
-            alert(this.$data.id);
-        },
-        async agregar(){
-            const nombre = await agregarNombre();
-            this.$data.NombreTrabajador = nombre;
-        },
-        cambiar:cambiarPantalla,
-    },
-    beforeMount(){
-        this.agregar();
-    }
+//Botones de libros
+const btnConsultarLibros = document.getElementById("btnConsultarLibros");
+const btnAgregarLibros = document.getElementById("btnAgregarLibros");
+const btnActualizarLibros = document.getElementById("btnActualizarLibros");
+const btnEliminarLibros = document.getElementById("btnEliminarLibros");
+
+//Funciones de opciones de usuarios
+btnConsultarUsuario.addEventListener("click", (e) => {
+  window.location.href="usuarios/consultarusuario.html";
 });
 
+btnAgregarUsuario.addEventListener("click", (e) => {
+  window.location.href = "usuarios/agregarusuario.html";
+});
 
-agregarEventosUsuarios();
-agregarEventosVideojuego();
-agregarEventosInventario();
+btnActualizarUsuario.addEventListener("click", (e) => {
+  window.location.href = "usuarios/actualizarusuario.html";
+});
 
-async function agregarNombre(){
-    const id = _id;
-    const usuario= await fetch(URLTrabajador+id,configFetch)
-    .then(response => response.json());
-    return usuario.nombre;
-}
+btnEliminarUsuario.addEventListener("click", (e) => {
+  window.location.href = "usuarios/eliminarusuario.html";
+});
 
-function cambiarPantalla(dir){
-    window.location=`${dir}?usuario=${_id}`;
-}
+//Funciones de opciones de librps
+btnConsultarLibros.addEventListener("click", (e) => {
+  window.location.href = "libros/consultarlibro.html";
+});
+
+btnAgregarLibros.addEventListener("click", (e) => {
+  window.location.href = "libros/agregarlibro.html";
+});
+
+btnActualizarLibros.addEventListener("click", (e) => {
+  window.location.href = "libros/actualizarlibro.html";
+});
+
+btnEliminarLibros.addEventListener("click", (e) => {
+  window.location.href = "libros/eliminarlibro.html";
+});
