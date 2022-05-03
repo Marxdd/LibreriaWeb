@@ -1,82 +1,82 @@
-const mongoose = require('mongoose');
-const usuarioModel = require('../model/Usuario');
+'use strict';
+const mongoose = require("mongoose");
+const userModel = require('../model/Usuario'); 
+const url = "mongodb://localhost:27017/dbbiblioteca";
 
-const uri = "mongodb://localhost:27017/dbbiblioteca";
+class UsuariosControl {
 
-exports.conexionBD = async () => {
+  async conexionBD() {
     try {
-        await mongoose.connect(uri);
-        console.log('Conexión exitosa');
+      await mongoose.connect(url);
+      console.log("conexion exitosa");
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
+  }
+
+  async insertarDato(nuevoDato) {
+    const dato = new userModel({
+      correo: nuevoDato.correo,
+      contra: nuevoDato.contrasena,
+      nombre: nuevoDato.nombre,
+      direccion: nuevoDato.direccion,
+      telefono: nuevoDato.telefono,
+    });
+    await dato.save();
+    console.log("Se agrego correctamente el dato: " + nuevoDato.nombre);
+  }
+
+  async eliminarDato(idBuscar) {
+    const user = await userModel.deleteOne({
+      _id: idBuscar,
+    });
+    if (user.deletedCount != 0) {
+      console.log("Se elimino correctamente el dato con id: " + idBuscar);
+    } else {
+      console.log("No se encontro un dato con id: " + idBuscar);
+    }
+    return user;
+  }
+
+  async actualizarDato(idBuscar, direccionNuevo) {
+    const user = await userModel.updateOne(
+      {
+        _id: idBuscar,
+      },
+      {
+        $set: {
+          direccion: direccionNuevo,
+        },
+      }
+    );
+    if (user.modifiedCount != 0) {
+      console.log(
+        "El id " +
+          idBuscar +
+          " se actualizo correctamente con el dato nuevo: " +
+          direccionNuevo
+      );
+    } else {
+      console.log("El id " + idBuscar + " no existe");
+    }
+    return user;
+  }
+
+  async consultarUnDato(idBuscar) {
+    const user = await userModel.findOne({
+      _id: idBuscar,
+    });
+    if (user != null) {
+      return user;
+    } else {
+      return null;
+    }
+  }
+
+  async consultarTodosDatos() {
+    const users = await userModel.find();
+    return users;
+  }
 }
 
-exports.cerrar = async () => {
-    try {
-        await mongoose.disconnect();
-        console.log('desconectad6o');
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-exports.addUsuario = async (usuarioNuevo) => {
-    try {
-        await this.conexionBD();
-        const usuario = new usuarioModel(usuarioNuevo);
-        await usuario.save();
-        console.log('Se registro correctamente a usuario: ' + usuario.nombre);
-    } catch (error) {
-        console.log(error);
-    }
-
-    mongoose.disconnect();
-}
-
-exports.deleteUsuario = async (nombre) => {
-    try {
-        await this.conexionBD();
-        const usuario = await usuarioModel.deleteOne({ nombre: nombre });
-        console.log('Se elimino proveedor: ' + usuario.nombre);
-    } catch (error) {
-        console.log(error);
-    }
-    mongoose.disconnect();
-}
-
-exports.updateUsuario = async (nombre, nuevosDatos) => {
-    try {
-        await this.conexionBD();
-        const usuario = await usuarioModel.updateOne({ nombre: nombre }, { $set: nuevosDatos });
-        console.log('Se han encontrado ' + usuario.matchedCount + ' documentos');
-        console.log('Se han modificado ' + usuario.modifiedCount + ' documentos');
-    } catch (error) {
-        console.log(error);
-    }
-    mongoose.disconnect();
-}
-
-exports.getUsuarioByCorreoyContra = async (correo, contra) => {
-    try {
-        await this.conexionBD();
-        const usuario = await usuarioModel.findOne({ correo: correo, contra: contra });
-        return usuario;
-    } catch (error) {
-        console.log(error);
-    }
-    mongoose.disconnect();
-}
-
-exports.getUsuarios = async () => {
-    try {
-        await this.conexionBD();
-        const usuario = await usuarioModel.find();
-        console.log(usuario);
-    } catch (error) {
-        console.log(error);
-    }
-    mongoose.disconnect();
-}
-
-
+module.exports = UsuariosControl;

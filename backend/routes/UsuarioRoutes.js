@@ -1,15 +1,21 @@
 const express = require('express');
-const usuarios = require("../Controller/usuariosController");
+const controller = require("../Controller/UsuariosController");
 const router = express.Router();
-const middleware = require("../middleware/usuariosMiddleware");
+const middleware = require("../middleware/usuariosMiddleware")
+const usuarios = new controller();
 
 
 router.route("/").get(async (req, res) => {
 
-    const data = await usuarios.getUsuarios();
+    
+    try {
+        const data = await usuarios.consultarTodosDatos();
+        res.send(data);
 
-    res.json(data);
-    console.log(data);
+    } catch (error) {
+        console.log('Atencion Error !!! : '+error);
+    }
+    
 });
 
 router.route("/").post(async (req, res) => {
@@ -21,7 +27,7 @@ router.route("/").post(async (req, res) => {
         telefono: req.body.telefono
     };
 
-    await usu.insertarDato(user);
+    await trabajador.insertarDato(user);
     delete user.contrasena
     res.status(201).json({
         status: 'Agregado!',

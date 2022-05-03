@@ -1,60 +1,59 @@
-const URLVideojuego = "http://localhost:3312/api/v1/videojuego/";
 const sessionUser = new URLSearchParams(window.location.search);
 const _id = sessionUser.get("usuario");
-const configFetch = {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
 
 agregarEventoRegresar();
-agregarEventoRegistrar();
+agregarEventoRegistrar(); 
 
-
-
-function agregarEventoRegistrar(){
-    const btnRegistrar = document.getElementById("registrarse");
-    btnRegistrar.addEventListener("click",agregarVideojuego);
+function agregarEventoRegistrar() {
+  const btnRegistrar = document.getElementById("registrarse");
+  btnRegistrar.addEventListener("click", agregarLibro);
 }
 
-async function agregarVideojuego(){
-    const inTitulo = document.getElementById("titulo").value;
-    const inGenero = document.getElementById("genero").value;
-    const inClasificacion = document.getElementById("clasificacion").value;
-    const inConsola = document.getElementById("consola").value;
-    const inFabricante = document.getElementById("fabricante").value;
-    const inVersion = document.getElementById("version").value;
+async function agregarLibro() {
+  const titulo = document.getElementById("titulo").value;
+  const autor = document.getElementById("autor").value;
+  const fecha = document.getElementById("fecha").value;
+  const isbn = document.getElementById("isbn").value;
+  const editorial = document.getElementById("editorial").value;
 
+  // Creating a XHR object
+  let xhr = new XMLHttpRequest();
 
-    const vid = {
-        titulo:inTitulo,
-        genero:inGenero,
-        clasificacion:inClasificacion,
-        consola:inConsola,
-        fabricante:inFabricante,
-        version:inVersion
-    };
+  // open a connection
+  xhr.open("POST", "http://localhost:3312/api/v1/libros", true);
 
-    configFetch.body = JSON.stringify(vid);
+  // Set the request header i.e. which type of content you are sending
+  xhr.setRequestHeader("Content-Type", "application/json");
 
-    const resData= await fetch(URLVideojuego,configFetch)
-    .then(res=> res.json());
+  // Create a state change callback
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Print received data from server
+      alert(xhr.responseText);
+    }
+  };
 
-    alert(resData.status);
+  // Converting JSON data to string
+  var data = JSON.stringify({
+    titulo: titulo,
+    autor: autor,
+    fecha: fecha,
+    isbn: isbn,
+    editorial: editorial
+  }); 
+
+  // Sending data with the request
+  xhr.send(data);
+
 }
 
-
-
-
-
-function agregarEventoRegresar(){
-    const btnRegresar = document.getElementById("cancelar");
-    btnRegresar.addEventListener("click",()=>{regresar(_id)});
+function agregarEventoRegresar() {
+  const btnRegresar = document.getElementById("cancelar");
+  btnRegresar.addEventListener("click", () => {
+    regresar(_id);
+  });
 }
 
-function regresar(_id){
-    window.location=`../menu.html?usuario=${_id}`;
+function regresar(_id) {
+  window.location = `../menu.html?usuario=${_id}`;
 }

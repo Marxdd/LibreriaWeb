@@ -1,4 +1,4 @@
-const URLLibro = "http://localhost:3312/api/v1/libro/";
+const URLLibro = "http://localhost:3312/api/v1/libros/";
 const sessionUser = new URLSearchParams(window.location.search);
 const _id = sessionUser.get("usuario");
 const configFetch = {

@@ -9,5 +9,5 @@ const libroSchema = new mongoose.Schema({
     editorial: String
 });
 
-const gameModel = mongoose.model('libros', libroSchema);
-module.exports = gameModel;
+const libroModel = mongoose.model('libros', libroSchema);
+module.exports = libroModel;

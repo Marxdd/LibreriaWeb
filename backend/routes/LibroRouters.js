@@ -1,13 +1,13 @@
 const express = require('express');
-const controller = require('../controller/librosController');
+const controller = require('../Controller/LibrosController');
 const router = express.Router();
 
 const libro = new controller();
 
-router.route("/").get(async (req, res) => {
+router.get("/", (async (req, res) => {
     const data = await libro.mostrarTodos();
     res.json(data);
-});
+}));
 
 router.route("/").post(async (req, res) => {
     const libro = {

@@ -1,4 +1,4 @@
-const url = "http://localhost:3312/api/v1/usuario/";
+const url = "http://localhost:3312/api/v1/usuarios/";
 
 const correo = document.getElementById("txtCorreo").value;
 const contra = document.getElementById("txtPassword").value;
@@ -17,16 +17,9 @@ async function validarUsuario(usuario, contra) {
 
   var user = { correo: usuario, contra: contra };
 
-  const data = await fetch(url,{
-    method: "POST", // or 'PUT'
-    body: JSON.stringify(user), // data can be `string` or {object}!
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .catch((error) => alert("Error:", error))
-    .then((response) => alert("Success:", response));
+  const data = await fetch(url)
+    .then((response) => response.json())
+    .then((data) => console.log(data));
 
 
   for (let i = 0; i < data.length; i++) {
