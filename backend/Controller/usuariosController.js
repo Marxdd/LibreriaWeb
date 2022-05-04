@@ -14,7 +14,9 @@ class UsuariosControl {
     }
   }
 
-  async insertarDato(nuevoDato) {
+  async insertarUsuario(usuarioNuevo) {
+
+    await this.conexionBD();
     const dato = new userModel({
       correo: nuevoDato.correo,
       contra: nuevoDato.contrasena,
@@ -24,9 +26,11 @@ class UsuariosControl {
     });
     await dato.save();
     console.log("Se agrego correctamente el dato: " + nuevoDato.nombre);
+    mongoose.disconnect();
   }
 
   async eliminarDato(idBuscar) {
+    await this.conexionBD();
     const user = await userModel.deleteOne({
       _id: idBuscar,
     });
@@ -35,10 +39,12 @@ class UsuariosControl {
     } else {
       console.log("No se encontro un dato con id: " + idBuscar);
     }
+    mongoose.disconnect();
     return user;
   }
 
   async actualizarDato(idBuscar, direccionNuevo) {
+    await this.conexionBD();
     const user = await userModel.updateOne(
       {
         _id: idBuscar,
@@ -59,13 +65,17 @@ class UsuariosControl {
     } else {
       console.log("El id " + idBuscar + " no existe");
     }
+    mongoose.disconnect();
     return user;
   }
 
   async consultarUnDato(idBuscar) {
+    await this.conexionBD();
     const user = await userModel.findOne({
       _id: idBuscar,
     });
+
+    mongoose.disconnect();
     if (user != null) {
       return user;
     } else {
@@ -74,9 +84,11 @@ class UsuariosControl {
   }
 
   async consultarTodosDatos() {
+    await this.conexionBD();
     const users = await userModel.find();
+    mongoose.disconnect();
     return users;
   }
-}
+} 
 
 module.exports = UsuariosControl;

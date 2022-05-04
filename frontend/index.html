@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="index.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Iniciar Sesión</title>
   </head>
@@ -28,9 +27,9 @@
           </hgroup>
           
           <div class="datosInicio">
-            <form action="menu.html" method="POST">
+            
               <label><b>Correo:</b></label>
-              <input v-model="correo"
+              <input 
                 class="cajaTexto"
                 type="text"
                 id="txtCorreo"
@@ -38,18 +37,18 @@
                 required
               />
               <label><b>Contraseña:</b></label>
-              <input v-model="contra"
+              <input 
                 class="cajaTexto"
                 type="password"
                 id="txtPassword"
                 placeholder="Introduzca su contraseña"
                 required
               />
-            </form>
           </div>
-          <input id="btnIngresar" type="button" class="botonIngresar" value="Ingresar" />
+          <button id="btnIngresar">Ingresar</button>
         </section>
       </div>
     </main>
+    <script src="index.js"></script>
   </body>
 </html>

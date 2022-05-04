@@ -5,7 +5,6 @@ const url = "mongodb://localhost:27017/dbbiblioteca";
 
 class LibrosControl {
 
-
   async conexionBD() {
     try {
         await mongoose.connect(url);

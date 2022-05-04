@@ -1,8 +1,26 @@
-const url = "http://localhost:3312/api/v1/usuarios/";
+var correo = document.getElementById("txtCorreo").value;
+var contra = document.getElementById("txtPassword").value;
+var btnIngresar = document.getElementById("btnIngresar");
+var usuarios = {};
 
-const correo = document.getElementById("txtCorreo").value;
-const contra = document.getElementById("txtPassword").value;
-const btnIngresar = document.getElementById("btnIngresar");
+async function probarConexion() {
+  const Http = new XMLHttpRequest();
+  const url = "http://localhost:3312/api/v1/usuarios";
+  Http.open("GET", url);
+  Http.send();
+
+  Http.onreadystatechange = (e) => {
+    console.log(Http.responseText);
+  };
+ 
+ // usuarios = Http.responseText;
+  try {
+     usuarios = JSON.stringify(Http.responseText);
+     console.log(usuarios);
+  } catch (error) {
+    alert(error);
+  }
+}
 
 async function ingresarSesion() {
   const validar = await validarUsuario(correo, contra);
@@ -13,14 +31,13 @@ async function ingresarSesion() {
     alert("Validacion denegada");
   }
 }
-async function validarUsuario(usuario, contra) {
 
+async function validarUsuario(usuario, contra) {
   var user = { correo: usuario, contra: contra };
 
   const data = await fetch(url)
     .then((response) => response.json())
     .then((data) => console.log(data));
-
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].correo === usuario) {
@@ -30,4 +47,4 @@ async function validarUsuario(usuario, contra) {
   return null;
 }
 
-btnIngresar.addEventListener("click", ingresarSesion());
+btnIngresar.addEventListener("click", probarConexion);
