@@ -12,7 +12,7 @@ function agregarEventoRegistrar() {
 async function agregarLibro() {
   const titulo = document.getElementById("titulo").value;
   const autor = document.getElementById("autor").value;
-  const fecha = document.getElementById("fecha").value;
+  const fecha = document.getElementById("fecha").value; 
   const isbn = document.getElementById("isbn").value;
   const editorial = document.getElementById("editorial").value;
 
@@ -30,7 +30,7 @@ async function agregarLibro() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       // Print received data from server
       alert(xhr.responseText);
-      window.location.href = ".../menu.html";
+      window.location.href = "../menu.html";
     }
   };
 

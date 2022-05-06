@@ -7,6 +7,7 @@ const usuarios = new usuariosController();
 const librosController = require("../Controller/LibrosController");
 const libros = new librosController();
 const mongoose = require("mongoose");
+const path = require("path");
 
 const globalErrorHandler = require("../utils/appError");
 var cors = require("cors");
@@ -26,6 +27,32 @@ app.get("/api/v1/usuarios", async (req, res) => {
   }
 });
 
+app.get("/api/v1/libros/:isbn", async (req, res) => {
+  try {
+    const data = await libros.consultarUnLibro(req.params.isbn);
+    if(data!=null){
+    res.send(data);
+    }else{
+      res.send("Nada");
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.get("/api/v1/usuarios/:correo", async (req, res) => {
+  try {
+    const data = await usuarios.consultarUnDato(req.params.correo);
+    if (data != null) {
+      res.send(data);
+    } else {
+      res.send("Nada");
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 app.post("/api/v1/libros", async (req, res) => {
   const libro = {
     titulo: req.body.titulo,
@@ -40,8 +67,63 @@ app.post("/api/v1/libros", async (req, res) => {
   res.send("Libro agregado!");
 });
 
+app.post("/api/v1/usuarios", async (req, res) => {
+  const usuario = {
+    nombre: req.body.nombre,
+    correo: req.body.correo,
+    contra: req.body.contra,
+    esAdmin: req.body.esAdmin
+  };
+
+  await usuarios.insertarUsuario(usuario);
+
+  res.send("Usuario agregado!");
+});
+
+app.put("/api/v1/libros/:isbn", async (req, res) => {
+
+  try {
+    const libroNuevo = {
+      titulo: req.body.titulo,
+      autor: req.body.autor,
+      fecha: req.body.fecha,
+      isbn: req.body.isbn,
+      editorial: req.body.editorial,
+    };
+
+    await libros.actualizarLibro(libroNuevo.isbn, libroNuevo);
+
+    res.send("Libro Acualizado!");
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.put("/api/v1/usuarios/:correo", async (req, res) => {
+  try {
+    const usuario = {
+      nombre: req.body.nombre,
+      correo: req.body.correo,
+      contra: req.body.contra,
+      esAdmin: req.body.esAdmin,
+    };
+
+    await usuarios.actualizarUsuario(usuario.correo, usuario);
+
+    res.send("Usuario Actualizado!");
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 //app.use("/api/v1/libros", libroRouters);
 //app.use('/api/auth', AuthController);
+
+app.get("/", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "../../frontend/index.html")
+  );
+});
 
 app.all("*", (req, resp, next) => {
   next(

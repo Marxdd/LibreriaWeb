@@ -13,17 +13,24 @@
       <header>
         <h1>Actualizar Libro</h1>
         <label class="mensaje1" id="mensaje1"
-          >Ingrese el ID y los datos solicitados para actualizar un libro
+          >Ingrese el ISBN y los datos solicitados para actualizar un libro
         </label>
       </header>
 
       <section>
         <div id="contenedor">
-        <input type="text" placeholder="ID del libro" required id="id">
+        <input type="text" placeholder="ISBN del libro" required id="isbn"> 
+        <button id="verificar">Verificar</button>
         <hr>
         <br>
-        <input type="text" placeholder="Clasificación" required id="clasificacion">
-        <br>
+        <input type="text" placeholder="Titulo del libro" required id="titulo">
+         <br>
+         <input type="text" placeholder="Autor" required id="autor">
+         <br>
+         <input type="text" placeholder="Fecha de publicación" required id="fecha">
+         <br>
+         <input type="text" placeholder="Editorial" required id="editorial">
+         <br>
         <input type="button" value="Cancelar" id="cancelar"> <input type="submit" value="Actualizar" id="actualizar">
         <br>
         

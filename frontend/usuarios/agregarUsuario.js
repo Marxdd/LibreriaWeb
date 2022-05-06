@@ -1,58 +1,57 @@
-const URLUsuario = "http://localhost:3312/api/v1/usuario/";
 const sessionUser = new URLSearchParams(window.location.search);
 const _id = sessionUser.get("usuario");
-const configFetch = {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
 
 agregarEventoRegresar();
 agregarEventoRegistrar();
 
-
-
-function agregarEventoRegistrar(){
-    const btnRegistrar = document.getElementById("registrarse");
-    btnRegistrar.addEventListener("click",agregarUsuario);
+function agregarEventoRegistrar() {
+  const btnRegistrar = document.getElementById("registrarse");
+  btnRegistrar.addEventListener("click", agregarUsuario);
 }
 
-async function agregarUsuario(){
-    const inNombre = document.getElementById("nombre").value;
-    const inDireccion = document.getElementById("direccion").value;
-    const inTelefono = document.getElementById("telefono").value;
-    const inCorreo = document.getElementById("correo").value;
-    const inContra = document.getElementById("contrasena").value;
+async function agregarUsuario() {
+  const nombre = document.getElementById("nombre").value;
+  const contra = document.getElementById("contra").value;
+  const correo = document.getElementById("correo").value;
+  const esAdmin = document.getElementById("esAdmin").checked;
 
+  // Creating a XHR object
+  let xhr = new XMLHttpRequest();
 
-    const user = {
-        correo:inCorreo,
-        contrasena:inContra,
-        nombre:inNombre,
-        direccion:inDireccion,
-        telefono:inTelefono
-    };
+  // open a connection
+  xhr.open("POST", "http://localhost:3312/api/v1/usuarios", true);
 
-    configFetch.body = JSON.stringify(user);
+  // Set the request header i.e. which type of content you are sending
+  xhr.setRequestHeader("Content-Type", "application/json");
 
-    const resData= await fetch(URLUsuario,configFetch)
-    .then(res=> res.json());
+  // Create a state change callback
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Print received data from server
+      alert(xhr.responseText);
+      window.location.href = "../menu.html";
+    }
+  };
 
-    alert(resData.status);
+  // Converting JSON data to string
+  var data = JSON.stringify({
+    nombre: nombre,
+    correo: correo,
+    contra: contra,
+    esAdmin: esAdmin,
+  });
+
+  // Sending data with the request
+  xhr.send(data);
 }
 
-
-
-
-
-function agregarEventoRegresar(){
-    const btnRegresar = document.getElementById("cancelar");
-    btnRegresar.addEventListener("click",()=>{regresar(_id)});
+function agregarEventoRegresar() {
+  const btnRegresar = document.getElementById("cancelar");
+  btnRegresar.addEventListener("click", () => {
+    regresar(_id);
+  });
 }
 
-function regresar(_id){
-    window.location=`../menu.html?usuario=${_id}`;
+function regresar(_id) {
+  window.location = `../menu.html?usuario=${_id}`;
 }

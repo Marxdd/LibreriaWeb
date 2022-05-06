@@ -1,80 +1,107 @@
-const URLUsuario = "http://localhost:3312/api/v1/usuario/";
 const sessionUser = new URLSearchParams(window.location.search);
 const _id = sessionUser.get("usuario");
-const configFetch = {
-    method: 'PUT',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
+var checked = false;
 
-
-agregarEventoId();
 agregarEventoRegresar();
 agregarEventoActualizar();
-
+agregarEventoVerificar();
 
 function agregarEventoActualizar() {
-    const btnActualizar = document.getElementById("actualizar");
-    btnActualizar.addEventListener("click", actualizarUsuario);
+  const btnActualizar = document.getElementById("actualizar");
+  btnActualizar.addEventListener("click", actualizarUsuario);
+}
+
+function agregarEventoVerificar() {
+  const btnVerificar = document.getElementById("verificar");
+  btnVerificar.addEventListener("click", verificarUsuario);
+}
+
+async function verificarUsuario() {
+  if (checked) {
+    checked = false;
+  }
+  const correo = document.getElementById("correo").value;
+
+  const nombre = document.getElementById("nombre");
+  const contra = document.getElementById("contra");
+  const esAdmin = document.getElementById("esAdmin");
+
+  var usuario;
+  const Http = new XMLHttpRequest();
+  const url = `http://localhost:3312/api/v1/usuarios/${correo}`;
+  Http.open("GET", url);
+  Http.send();
+
+  Http.onreadystatechange = (e) => {
+    var str = Http.responseText;
+
+    if (!checked) {
+      if (str != null && str != "Nada") {
+        console.log(str);
+        usuario = JSON.parse(str);
+        alert(
+          "Usuario con correo " + correo + " verificado, Nombre: " + usuario.nombre
+        );
+        checked = true;
+      } else {
+        alert("El usuario no existe, favor de verificar correo");
+        nombre.value = "";
+        esAdmin.checked = false;
+        contra.value = "";
+        checked = true;
+      }
+      console.log(str);
+      nombre.value = usuario.nombre;
+      esAdmin.checked = usuario.esAdmin;
+      contra.value = usuario.contra;
+    }
+  };
 }
 
 async function actualizarUsuario() {
-    const inId = document.getElementById("id").value;
-    const inDireccion = document.getElementById("direccion").value;
-    const update = {
-        id:inId,
-        direccion: inDireccion
-    };
-    configFetch.method = "PUT";
-    configFetch.body = JSON.stringify(update);
-    const resData = await fetch(URLUsuario, configFetch)
-        .then(res => res.json());
+  const correo = document.getElementById("correo").value;
 
-    alert(resData.status);
-}
+  const nombre = document.getElementById("nombre").value;
+  const contra = document.getElementById("contra").value;
+  const esAdmin = document.getElementById("esAdmin").checked;
 
-function agregarEventoId() {
-    const inId = document.getElementById("id");
-    inId.addEventListener("keyup", agregarCampos)
-}
+  // Creating a XHR object
+  let xhr = new XMLHttpRequest();
 
-async function agregarCampos(event) {
-    const id = event.path[0].value;
+  // open a connection
+  xhr.open("PUT", `http://localhost:3312/api/v1/usuarios/${correo}`, true);
 
+  // Set the request header i.e. which type of content you are sending
+  xhr.setRequestHeader("Content-Type", "application/json");
 
-    if (!/^ *$/.test(id)) {
-        configFetch.method = "GET";
-        const data = await fetch(URLUsuario + id, configFetch)
-            .then(res => res.json())
-            .catch(error => null);
-        cambiarValores(data);
+  // Create a state change callback
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Print received data from server
+      alert(xhr.responseText);
+      window.location.href = "../menu.html";
     }
-}
+  };
 
-function cambiarValores(data) {
-    const inNombre = document.getElementById("nombre");
-    const inDireccion = document.getElementById("direccion");
-    const inTelefono = document.getElementById("telefono");
-    const inCorreo = document.getElementById("correo");
-    const inContra = document.getElementById("contrasena");
+  // Converting JSON data to string
+  var data = JSON.stringify({
+    correo:correo,
+    nombre:nombre,
+    contra:contra,
+    esAdmin:esAdmin
+  });
 
-    inNombre.value = data.nombre;
-    inDireccion.value = data.direccion;
-    inTelefono.value = data.telefono;
-    inCorreo.value = data.correo;
-    inContra.value = data.contrasena;
+  // Sending data with the request
+  xhr.send(data);
 }
 
 function agregarEventoRegresar() {
-    const btnRegresar = document.getElementById("cancelar");
-    btnRegresar.addEventListener("click", () => {
-        regresar(_id)
-    });
+  const btnRegresar = document.getElementById("cancelar");
+  btnRegresar.addEventListener("click", () => {
+    regresar(_id);
+  });
 }
 
 function regresar(_id) {
-    window.location = `../menu.html?usuario=${_id}`;
+  window.location = `../menu.html?usuario=${_id}`;
 }

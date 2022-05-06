@@ -3,10 +3,9 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   correo: {type:String, unique: true},
-  contrasena: String,
+  contra: String,
   nombre: String,
-  direccion: String,
-  telefono: String
+  esAdmin: Boolean
 });
 
 const userModel = mongoose.model('usuarios', userSchema);

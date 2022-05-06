@@ -13,20 +13,28 @@
       <header>
         <h1>Actualizar Usuario</h1>
         <label class="mensaje1" id="mensaje1"
-          >Ingrese el ID y los datos solicitados para actualizar un Usuario
+          >Ingrese el correo y los datos solicitados para actualizar un Usuario
         </label>
       </header>
 
       <section>
         <div id="contenedor">
-        <input type="text" placeholder="ID del usuario" required id="id">
+        <input type="text" placeholder="Correo del Usuario" required id="correo"> 
+        <button id="verificar">Verificar</button>
         <hr>
         <br>
-        <input type="text" placeholder="Dirección" required id="direccion">
+        <input type="text" placeholder="Nombre de Usuario" required id="nombre">
+         <br>
+         <input type="text" placeholder="Contraseña" required id="contra">
+         <br>
+         <label class="mensaje1" id="mensaje1"
+          >Es Administador
+        </label>
+        <input type="checkbox" id="esAdmin">
+         <br>
+        <input type="button" value="Cancelar" id="cancelar"> <input type="submit" value="Actualizar" id="actualizar">
         <br>
-        <input type="submit" value="Actualizar" id="actualizar">
-        <br>
-        <input type="button" value="Cancelar" id="cancelar">
+        
         </div>
       </section>
 

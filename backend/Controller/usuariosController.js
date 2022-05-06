@@ -4,7 +4,6 @@ const userModel = require('../model/Usuario');
 const url = "mongodb://localhost:27017/dbbiblioteca";
 
 class UsuariosControl {
-
   async conexionBD() {
     try {
       await mongoose.connect(url);
@@ -15,17 +14,15 @@ class UsuariosControl {
   }
 
   async insertarUsuario(usuarioNuevo) {
-
     await this.conexionBD();
     const dato = new userModel({
-      correo: nuevoDato.correo,
-      contra: nuevoDato.contrasena,
-      nombre: nuevoDato.nombre,
-      direccion: nuevoDato.direccion,
-      telefono: nuevoDato.telefono,
+      correo: usuarioNuevo.correo,
+      contra: usuarioNuevo.contra,
+      nombre: usuarioNuevo.nombre,
+      esAdmin: usuarioNuevo.esAdmin,
     });
     await dato.save();
-    console.log("Se agrego correctamente el dato: " + nuevoDato.nombre);
+    console.log("Se agrego correctamente el dato: " + usuarioNuevo.nombre);
     mongoose.disconnect();
   }
 
@@ -43,36 +40,27 @@ class UsuariosControl {
     return user;
   }
 
-  async actualizarDato(idBuscar, direccionNuevo) {
+  async actualizarUsuario(correoBuscar, nuevoUsuario) {
     await this.conexionBD();
-    const user = await userModel.updateOne(
-      {
-        _id: idBuscar,
-      },
+    const usuario = await userModel.updateOne(
+      { correo: correoBuscar },
       {
         $set: {
-          direccion: direccionNuevo,
-        },
+          nombre: nuevoUsuario.nombre,
+          contra: nuevoUsuario.contra,
+          esAdmin: nuevoUsuario.esAdmin
+        }
       }
     );
-    if (user.modifiedCount != 0) {
-      console.log(
-        "El id " +
-          idBuscar +
-          " se actualizo correctamente con el dato nuevo: " +
-          direccionNuevo
-      );
-    } else {
-      console.log("El id " + idBuscar + " no existe");
-    }
+    console.log("El Usuario de correo " + correoBuscar + "se actualizo correctamente!");
     mongoose.disconnect();
-    return user;
+    return usuario;
   }
 
-  async consultarUnDato(idBuscar) {
+  async consultarUnDato(correoBuscar) {
     await this.conexionBD();
     const user = await userModel.findOne({
-      _id: idBuscar,
+      correo: correoBuscar
     });
 
     mongoose.disconnect();
