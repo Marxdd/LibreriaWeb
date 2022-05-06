@@ -30,6 +30,7 @@ async function agregarLibro() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       // Print received data from server
       alert(xhr.responseText);
+      window.location.href = ".../menu.html";
     }
   };
 
