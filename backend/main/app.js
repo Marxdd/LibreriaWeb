@@ -43,6 +43,15 @@ app.delete("/api/v1/usuarios/:correo", async (req, res) => {
   }
 });
 
+app.get("/api/v1/libros", async (req, res) => {
+  try {
+    const data = await libros.mostrarTodos();
+    res.send(data);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 app.get("/api/v1/usuarios", async (req, res) => {
   
   try {

@@ -1,59 +1,69 @@
-const URLVideojuegos = "http://localhost:3312/api/v1/videojuego/";
 const sessionUser = new URLSearchParams(window.location.search);
 const _id = sessionUser.get("usuario");
-const configFetch = {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
+var checked = false;
 
 agregarEventoRegresar();
-consultarVideojuegos();
+consultarLibros();
 
-async function consultarVideojuegos(){
-    const data= await fetch(URLVideojuegos,configFetch)
-    .then(response => response.json());
-    const tbody = document.getElementsByTagName("tbody")[0];
-    tbody.innerHTML="";
-    data.forEach(e=>{
-        tbody.innerHTML += agregarFila(e).outerHTML;
-    });
+async function consultarLibros() {
+  if (checked) {
+    checked = false;
+  }
+
+  const tableLibros = document.getElementById("libros");
+
+  var libros;
+  const Http = new XMLHttpRequest();
+  const url = "http://localhost:3312/api/v1/libros";
+  Http.open("GET", url);
+  Http.send();
+
+  Http.onreadystatechange = (e) => {
+    var str = Http.responseText;
+
+    if (!checked) {
+      libros = JSON.parse(str);
+      var inner = `<thead>
+              <tr>
+                <th>ISBN</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Fecha de Publicación</th>
+                <th>Editorial</th>
+              </tr>
+            </thead>`;
+
+      for (let i = 0; i < libros.length; i++) {
+        var isbn = libros[i].isbn;
+        var titulo = libros[i].titulo;
+        var autor = libros[i].autor;
+        var fecha = libros[i].fechaPublicacion;
+        var editorial = libros[i].editorial;
+
+        inner += `<tbody>
+              <tr>
+                <td>${isbn}</td>
+                <td>${titulo}</td>
+                <td>${autor}</td>
+                <td>${fecha}</td>
+                <td>${editorial}</td>
+              </tr>
+            </tbody>`;
+      }
+
+      tableLibros.innerHTML = inner;
+      checked = true;
+    }
+  };
 }
 
-
-
-function agregarFila(data){
-    const row = document.createElement("tr");
-    const colTitulo = document.createElement("td");
-    const colGenero = document.createElement("td");
-    const colClasificacion = document.createElement("td");
-    const colConsola = document.createElement("td");
-    const colFabricante = document.createElement("td");
-    const colVersion = document.createElement("td");
-    colTitulo.innerText=data.titulo;
-    colGenero.innerText=data.genero;
-    colClasificacion.innerText=data.clasificacion;
-    colConsola.innerText=data.consola;
-    colFabricante.innerText=data.fabricante;
-    colVersion.innerText=data.version;
-    row.innerHTML += colTitulo.outerHTML;
-    row.innerHTML += colGenero.outerHTML;
-    row.innerHTML += colClasificacion.outerHTML;
-    row.innerHTML += colConsola.outerHTML;
-    row.innerHTML += colFabricante.outerHTML;
-    row.innerHTML += colVersion.outerHTML;
-    return row;
-
+function agregarEventoRegresar() {
+  const btnRegresar = document.getElementById("cancelar");
+  btnRegresar.addEventListener("click", () => {
+    regresar(_id);
+  });
 }
 
-function agregarEventoRegresar(){
-    const btnRegresar = document.getElementById("cancelar");
-    btnRegresar.addEventListener("click",()=>{regresar(_id)});
-}
-
-function regresar(_id){
-    window.location=`../menu.html?usuario=${_id}`;
+function regresar(_id) {
+  window.location = `../menu.html?usuario=${_id}`;
 }

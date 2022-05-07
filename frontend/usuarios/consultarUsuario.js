@@ -1,57 +1,64 @@
-const URLUsuario = "http://localhost:3312/api/v1/usuario/";
 const sessionUser = new URLSearchParams(window.location.search);
 const _id = sessionUser.get("usuario");
-const configFetch = {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
+var checked = false;
 
 agregarEventoRegresar();
-consultarUsuarioes();
+consultarUsuarios();
 
-async function consultarUsuarioes(){
-    const data= await fetch(URLUsuario,configFetch)
-    .then(response => response.json());
-    const tbody = document.getElementsByTagName("tbody")[0];
-    tbody.innerHTML="";
-    data.forEach(e=>{
-        tbody.innerHTML += agregarFila(e).outerHTML;
-    });
+async function consultarUsuarios() {
+  if (checked) {
+    checked = false;
+  }
+
+  const tableUsuarios = document.getElementById("usuarios");
+
+  var usuarios;
+  const Http = new XMLHttpRequest();
+  const url = "http://localhost:3312/api/v1/usuarios";
+  Http.open("GET", url);
+  Http.send();
+
+  Http.onreadystatechange = (e) => {
+    var str = Http.responseText;
+
+    if (!checked) {
+      usuarios = JSON.parse(str);
+      var inner = `<thead>
+              <tr>
+                <th>Correo Electronico</th>
+                <th>Nombre</th>
+                <th>Es Administrador</th>
+              </tr>
+            </thead>`;
+      
+
+      for (let i = 0; i < usuarios.length; i++) {
+        var correo = usuarios[i].correo;
+        var nombre = usuarios[i].nombre;
+        var esAdmin = usuarios[i].esAdmin;
+
+        inner += `<tbody>
+              <tr>
+                <td>${correo}</td>
+                <td>${nombre}</td>
+                <td>${esAdmin ? "Si": "No"}</td>
+              </tr>
+            </tbody>`;
+      }
+
+      tableUsuarios.innerHTML = inner;
+      checked = true;
+    }
+  };
 }
 
-
-
-function agregarFila(data){
-    const row = document.createElement("tr");
-    const colNombre = document.createElement("td");
-    const colDireccion = document.createElement("td");
-    const colTelefono = document.createElement("td");
-    const colCorreo = document.createElement("td");
-    colNombre.innerText=data.nombre;
-    colDireccion.innerText=data.direccion;
-    colTelefono.innerText=data.telefono;
-    colCorreo.innerText=data.correo;
-    row.innerHTML += colNombre.outerHTML;
-    row.innerHTML += colDireccion.outerHTML;
-    row.innerHTML += colTelefono.outerHTML;
-    row.innerHTML += colCorreo.outerHTML;
-
-    return row;
-
-
-
-
+function agregarEventoRegresar() {
+  const btnRegresar = document.getElementById("cancelar");
+  btnRegresar.addEventListener("click", () => {
+    regresar(_id);
+  });
 }
 
-function agregarEventoRegresar(){
-    const btnRegresar = document.getElementById("cancelar");
-    btnRegresar.addEventListener("click",()=>{regresar(_id)});
-}
-
-function regresar(_id){
-    window.location=`../menu.html?usuario=${_id}`;
+function regresar(_id) {
+  window.location = `../menu.html?usuario=${_id}`;
 }

@@ -75,9 +75,9 @@ class LibrosControl {
   }
   async mostrarTodos() {
     await this.conexionBD();
-    const libro = await libroModel.find();
-    console.log(libro);
+    const libros = await libroModel.find();
     mongoose.disconnect();
+    return libros;
   }
 }
 
