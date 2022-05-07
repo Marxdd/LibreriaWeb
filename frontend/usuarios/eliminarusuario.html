@@ -13,17 +13,20 @@
       <header>
         <h1>Eliminar usuario</h1>
         <label class="mensaje1" id="mensaje1"
-          >Ingrese el ID del usuario que desea eliminar
+          >Ingrese el correo del usuario que desea eliminar
         </label>
       </header>
 
       <section>
         <div id="contenedor">
-        <input type="text" placeholder="ID del usuario" required id="id">   
-        <br>
-        <input type="submit" value="Eliminar" id="eliminar">
-        <br>
-        <input type="button" value="Cancelar" id="cancelar">  
+          <input type="text" placeholder="Correo del Usuario" required id="correo" />
+          <button id="verificar">Verificar</button>
+          <hr />
+          <div id="usuario">
+          </div>
+          <input type="button" value="Cancelar" id="cancelar" />
+          <input type="submit" value="Eliminar" id="eliminar" />
+          <br />
         </div>
       </section>
 

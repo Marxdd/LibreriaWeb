@@ -9,7 +9,6 @@
   </head>
   <body>
     <main>
-
       <header>
         <h1>Eliminar Libro</h1>
         <label class="mensaje1" id="mensaje1"
@@ -19,14 +18,16 @@
 
       <section>
         <div id="contenedor">
-        <input type="text" placeholder="ID del libro" required id="id">   
-        <br> 
-        <input type="submit" value="Eliminar" id="eliminar">
-        <br>
-        <input type="button" value="Cancelar" id="cancelar"> 
+          <input type="text" placeholder="ISBN del libro" required id="isbn" />
+          <button id="verificar">Verificar</button>
+          <hr />
+          <div id="libro">
+          </div>
+          <input type="button" value="Cancelar" id="cancelar" />
+          <input type="submit" value="Eliminar" id="eliminar" />
+          <br />
         </div>
       </section>
-
     </main>
     <script src="eliminarLibro.js"></script>
   </body>

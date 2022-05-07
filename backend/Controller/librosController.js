@@ -26,15 +26,17 @@ class LibrosControl {
     //console.log('Se agrego correctamente el libro: ' + libroNuevo.titulo);
     mongoose.disconnect();
   }
-  async eliminarLibro(titulo) {
+  async eliminarLibro(isbnBuscar) {
+    var eliminado = false;
     try {
       await this.conexionBD();
-      const libro = await libroModel.findOne({ titulo: titulo });
+      const libro = await libroModel.findOne({ isbn: isbnBuscar });
       if (libro != null) {
-        await libroModel.deleteOne({ titulo: titulo });
+        await libroModel.deleteOne({ isbn: isbnBuscar });
         console.log(
           "Se elimino correctamente el libro con titulo : " + libro.titulo
         );
+        eliminado = true;
       } else {
         console.log("El libro que desea eliminar no existe");
       }
@@ -42,6 +44,7 @@ class LibrosControl {
       console.log(error);
     }
     mongoose.disconnect();
+    return eliminado;
   }
   async actualizarLibro(isbnBuscar, libroActualizado) {
     await this.conexionBD();

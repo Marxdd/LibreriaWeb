@@ -25,19 +25,21 @@ class UsuariosControl {
     console.log("Se agrego correctamente el dato: " + usuarioNuevo.nombre);
     mongoose.disconnect();
   }
-
-  async eliminarDato(idBuscar) {
+ 
+  async eliminarDato(correoBuscar) {
+    var eliminado = false;
     await this.conexionBD();
     const user = await userModel.deleteOne({
-      _id: idBuscar,
+      correo: correoBuscar
     });
     if (user.deletedCount != 0) {
-      console.log("Se elimino correctamente el dato con id: " + idBuscar);
+      console.log("Se elimino correctamente el usuario con correo: " + correoBuscar);
+      eliminado=true;
     } else {
-      console.log("No se encontro un dato con id: " + idBuscar);
+      console.log("No se encontro el usuario con correo: " + correoBuscar);
     }
     mongoose.disconnect();
-    return user;
+    return eliminado;
   }
 
   async actualizarUsuario(correoBuscar, nuevoUsuario) {

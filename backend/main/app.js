@@ -17,6 +17,32 @@ app.use(express.json());
 app.use(cors());
 
 //Routers
+app.delete("/api/v1/libros/:isbn", async (req, res) => {
+  try {
+    const data = await libros.eliminarLibro(req.params.isbn);
+    if (data) {
+      res.send("Libro Eliminado!");
+    } else {
+      res.send("No se eliminó nada");
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.delete("/api/v1/usuarios/:correo", async (req, res) => {
+  try {
+    const data = await usuarios.eliminarDato(req.params.correo);
+    if (data) {
+      res.send("Usuario Eliminado!");
+    } else {
+      res.send("No se eliminó nada");
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 app.get("/api/v1/usuarios", async (req, res) => {
   
   try {
