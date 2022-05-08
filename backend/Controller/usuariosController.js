@@ -4,7 +4,7 @@ const userModel = require('../model/Usuario');
 const url = "mongodb://localhost:27017/dbbiblioteca";
 
 class UsuariosControl {
-  async conexionBD() {
+  async  conexionBD() {
     try {
       await mongoose.connect(url);
       console.log("conexion exitosa");

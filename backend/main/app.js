@@ -56,6 +56,7 @@ app.get("/api/v1/usuarios", async (req, res) => {
   
   try {
     const data = await usuarios.consultarTodosDatos();
+    console.log("Funciona get usuarios ");
     res.send(data);
   } catch (error) {
     res.send(error);
@@ -109,8 +110,8 @@ app.post("/api/v1/usuarios", async (req, res) => {
     contra: req.body.contra,
     esAdmin: req.body.esAdmin
   };
-
-  await usuarios.insertarUsuario(usuario);
+  console.log("Funciona post usuarios ");
+  await usuarios.insertarUsuario(usuario);  
 
   res.send("Usuario agregado!");
 });
