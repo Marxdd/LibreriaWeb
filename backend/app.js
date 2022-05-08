@@ -1,15 +1,15 @@
 const express = require("express");
-const usuarioRoutes = require("../routes/UsuarioRoutes");
-const libroRouters = require("../routes/LibroRouters");
-const AuthController = require("../Auth/AuthController");
-const usuariosController = require("../Controller/UsuariosController");
+const usuarioRoutes = require("./routes/UsuarioRoutes");
+const libroRouters = require("./routes/LibroRouters");
+const AuthController = require("./Auth/AuthController");
+const usuariosController = require("./Controller/UsuariosController");
 const usuarios = new usuariosController();
-const librosController = require("../Controller/LibrosController");
+const librosController = require("./Controller/LibrosController");
 const libros = new librosController();
 const mongoose = require("mongoose");
 const path = require("path");
 
-const globalErrorHandler = require("../utils/appError");
+const globalErrorHandler = require("./utils/appError");
 var cors = require("cors");
 const app = express();
 app.use(express.json());
@@ -157,7 +157,7 @@ app.put("/api/v1/usuarios/:correo", async (req, res) => {
 
 app.get("/", function (req, res) {
   res.sendFile(
-    path.join(__dirname, "../../frontend/index.html")
+    path.join(__dirname, "../frontend/index.html")
   );
 });
 
