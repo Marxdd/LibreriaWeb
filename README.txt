@@ -4,4 +4,4 @@ Para poder ejecutar la aplicacion sera necesaro:
 
 2. Ejectuar en Node.js el archivo backend/app.js
 
-3. Una vez levantado el servidor abrir en un navegador la pagina frontend/index.html
+3. Una vez levantado el servidor abrir en un navegador el link http://localhost:3312/
