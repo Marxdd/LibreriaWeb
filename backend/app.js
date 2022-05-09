@@ -155,18 +155,145 @@ app.put("/api/v1/usuarios/:correo", async (req, res) => {
 //app.use("/api/v1/libros", libroRouters);
 //app.use('/api/auth', AuthController);
 
+//Recursos Principales
 app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/index.html"));
+  
+});
+
+app.get("/css/index.css", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/css/index.css"));
+});
+
+app.get("/img/libreria.png", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/img/libreria.png"));
+});
+app.get("/index.html", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/index.html"));
+});
+
+app.get("/index.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/index.js"));
+});
+
+app.get("/menu.html", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/menu.html"));
+});
+
+app.get("/css/stylepag.css", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/css/stylepag.css"));
+});
+
+app.get("/img/usuarios.jpg", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/img/usuarios.jpg"));
+});
+
+app.get("/menu.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/menu.js"));
+});
+
+//Recursos de usuarios
+app.get("/usuarios/actualizarusuario.html", function (req, res) {
   res.sendFile(
-    path.join(__dirname, "../frontend/index.html")
+    path.join(__dirname, "/../frontend/usuarios/actualizarusuario.html")
   );
 });
 
+app.get("/usuarios/actualizarusuario.js", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/actualizarusuario.js")
+  );
+});
+
+app.get("/usuarios/agregarusuario.html", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/agregarusuario.html")
+  );
+});
+
+app.get("/usuarios/agregarusuario.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/usuarios/agregarusuario.js"));
+});
+
+app.get("/usuarios/consultarusuario.html", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/consultarusuario.html")
+  );
+});
+
+app.get("/usuarios/consultarusuario.js", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/consultarusuario.js")
+  );
+});
+
+app.get("/usuarios/eliminarusuario.html", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/eliminarusuario.html")
+  );
+});
+
+app.get("/usuarios/eliminarusuario.js", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/eliminarusuario.js")
+  );
+});
+
+app.get("/usuarios/registrarusuario.html", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/registrarusuario.html")
+  );
+});
+
+app.get("/usuarios/registrarusuario.js", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/usuarios/registrarusuario.js")
+  );
+});
+
+//Recursos de Libros
+app.get("/libros/actualizarlibro.html", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "/../frontend/libros/actualizarlibro.html")
+  );
+});
+
+app.get("/libros/actualizarlibro.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/actualizarlibro.js"));
+});
+
+app.get("/libros/agregarlibro.html", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/agregarlibro.html"));
+});
+
+app.get("/libros/agregarlibro.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/agregarlibro.js"));
+});
+
+app.get("/libros/consultarlibro.html", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/consultarlibro.html"));
+});
+
+app.get("/libros/consultarlibro.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/consultarlibro.js"));
+});
+
+app.get("/libros/eliminarlibro.html", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/eliminarlibro.html"));
+});
+
+app.get("/libros/eliminarlibro.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "/../frontend/libros/eliminarlibro.js"));
+});
+
+  
+ 
 app.all("*", (req, resp, next) => {
   next(
     new globalErrorHandler(
       `No se pudo acceder a ${req.originalUrl} en el servidor`,
       404
-    )
+    ) 
   );
 });
 
